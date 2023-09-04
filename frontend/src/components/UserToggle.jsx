@@ -1,9 +1,13 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
-export default function UserToggle() {
+export default function UserToggle({ useUserList, handleSearchToggle }) {
   return (
     <>
-      <ToggleButtonGroup exclusive>
+      <ToggleButtonGroup
+        onChange={(event) => handleSearchToggle(event.target.value)}
+        value={useUserList}
+        exclusive
+      >
         <ToggleButton value="public">ALL ANIME</ToggleButton>
         <ToggleButton value="list">CHOOSE FROM LIST</ToggleButton>
       </ToggleButtonGroup>

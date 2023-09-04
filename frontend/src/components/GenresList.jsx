@@ -5,9 +5,10 @@ import {
   FormControl,
   Checkbox,
   FormControlLabel,
+  ListItemText,
 } from "@mui/material";
 
-export default function GenresList() {
+const GenresList = ({ selectedGenres, handleSelectedGenres }) => {
   const genres = [
     "Action",
     "Adventure",
@@ -28,21 +29,38 @@ export default function GenresList() {
     "Supernatural",
     "Suspense",
   ];
+
+  const handleToggle = (genre) => () => {
+    const updatedSelectedGenres = selectedGenres.includes(genre)
+      ? selectedGenres.filter((selectedGenre) => selectedGenre !== genre)
+      : [...selectedGenres, genre];
+
+    handleSelectedGenres(updatedSelectedGenres);
+  };
+
   return (
     <FormControl variant="filled" style={{ width: "200px" }}>
       <InputLabel id="genres-list">Genres</InputLabel>
-      <Select value={[]} labelId="genres-list" multiple>
-        {genres.map((genre) => {
-          return (
-            <MenuItem key={genre}>
-              <FormControlLabel
-                control={<Checkbox></Checkbox>}
-                label={genre}
-              ></FormControlLabel>
-            </MenuItem>
-          );
-        })}
+      <Select
+        sx={{ height: "100%" }}
+        value={selectedGenres}
+        labelId="genres-list"
+        onChange={() => {}} // We don't need to handle the Select's onChange
+        renderValue={() => ""}
+        multiple
+      >
+        {genres.map((genre) => (
+          <MenuItem key={genre} value={genre}>
+            <Checkbox
+              checked={selectedGenres.includes(genre)}
+              onChange={handleToggle(genre)} // Use handleToggle for checkbox change
+            />
+            <ListItemText primary={genre} />
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
-}
+};
+
+export default GenresList;
