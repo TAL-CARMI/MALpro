@@ -1,75 +1,30 @@
-import { Box, Slide } from "@mui/material";
-import SearchBar from "./components/SearchBar";
+import { ThemeProvider } from "@emotion/react";
+import { Box, Typography, Slide, Input } from "@mui/material";
+import "./App.css";
+import malTheme from "./Theme";
+import {Button} from "@mui/material";
 import { useRef, useState } from "react";
-import ExtraFilters from "./components/ExtraFilters";
-import AnimeCard from "./components/AnimeCard";
+
 
 function App() {
-  const [useUserList, setUseUserList] = useState("public");
-  const [selectedGenres, setSelectedGenres] = useState([]);
-  const [selectedPopularity, setSelectedPopularity] = useState([]);
-  const [ratingValues, setRatingValues] = useState([0, 10]);
-  const [showExtraFilters, setShowExtraFilters] = useState(false);
+
   const [showAnimeCard, setShowAnimeCard] = useState(false);
 
-  const searchRef = useRef();
-
-  function handleSearchToggle(value) {
-    setUseUserList(value);
-  }
-
-  function handleShowExtraFilters() {
-    setShowExtraFilters(!showExtraFilters);
-  }
-
-  function handleShowAnimeCard() {
-    setShowAnimeCard(true);
-  }
-
   return (
-    <>
-      <Slide direction="up" in={showAnimeCard} mountOnEnter unmountOnExit>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {showAnimeCard && (
-            <AnimeCard
-              name={"Code Geass"}
-              cover={
-                "https://cdn.myanimelist.net/images/anime/1792/138022l.jpg"
-              }
-              genre={"action"}
-            />
-          )}
-        </Box>
-      </Slide>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <form>
-          <SearchBar
-            useUserList={useUserList}
-            handleSearchToggle={handleSearchToggle}
-            selectedGenres={selectedGenres}
-            handleSelectedGenres={setSelectedGenres}
-            selectedPopularity={selectedPopularity}
-            handleSelectedPopularity={setSelectedPopularity}
-            ratingValues={ratingValues}
-            ratingHandleChange={setRatingValues}
-            handleShowExtraFilters={handleShowExtraFilters}
-            handleShowAnimeCard={handleShowAnimeCard}
-            ref={searchRef}
-          />
-
-          <Slide
-            direction="down"
-            in={showExtraFilters}
-            mountOnEnter
-            unmountOnExit
-          >
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              {showExtraFilters && <ExtraFilters />}
-            </Box>
-          </Slide>
-        </form>
+    <ThemeProvider theme={malTheme}>
+    <Typography sx={{color: "white", paddingLeft: "2vw", paddingTop: "2vh", marginBottom: "2vh", fontWeight: "bold"}} variant="h3">MALpro</Typography>
+    <div className="app">
+    <Box sx={{display: "flex", flexDirection: "column"}}>
+      <Box sx={{display: "flex", justifyContent: "center", width: showAnimeCard ? "60vw" : "30vw", height: "65vh"}}> 
+        <Box sx={{display:"grid", gridTemplateRows: "8", width: showAnimeCard ? "50%" : "100%", border: "4px solid #F7465F", }}>
+          
+          </Box> 
+        {<Box sx={{width: showAnimeCard ? "50%" : "0%", border: showAnimeCard ?"4px solid #E63C8B" : "0px none", transition: "width 0.5s"}}></Box>}
       </Box>
-    </>
+      <Button onClick={() => setShowAnimeCard(true)} sx={{height: "5vh", marginTop: "2vh", alignSelf: showAnimeCard ? "flex-end" : "center"}} color="primary" variant="outlined">GENERATE</Button>
+      </Box>
+      </div>
+      </ThemeProvider>
   );
 }
 
