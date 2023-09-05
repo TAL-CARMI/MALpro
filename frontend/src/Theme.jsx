@@ -11,6 +11,9 @@ const malTheme = createTheme({
     text: {
       primary: "#F7465F",
     },
+    common: {
+      primary: "#F7465F",
+    },
     secondary: {
       main: "#E63C8B",
     },
@@ -21,11 +24,37 @@ const malTheme = createTheme({
   components: {
     MuiOutlinedInput: {
       styleOverrides: {
+        notchedOutline: {
+          borderColor: "#F7465F",
+        },
+      },
+    },
+
+    MuiFormLabel: {
+      styleOverrides: {
         root: {
-          "&::placeholder": {
-            textAlign: "center",
-            fontSize: "10px",
-          },
+          color: "#F7465F",
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: "#F7465F",
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#202136",
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#202136",
         },
       },
     },
