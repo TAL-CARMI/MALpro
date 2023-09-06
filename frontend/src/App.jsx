@@ -15,9 +15,61 @@ import malTheme from "./Theme";
 import { Button } from "@mui/material";
 import { useRef, useState } from "react";
 import TextInput from "./components/TextInput";
+import CustomSelectInput from "./components/CustomSelectInput";
+import {
+  genreList,
+  popularitiesList,
+  episodeOptions,
+  typeList,
+  statusOptions,
+  listStatusOptions,
+  ratingOptions,
+} from "./utilities/optionArrays";
 
 function App() {
   const [showAnimeCard, setShowAnimeCard] = useState(false);
+  const [popularities, setPopularities] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [episodeCount, setEpisodeCount] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [statuses, setStatuses] = useState([]);
+  const [listStatuses, setListStatuses] = useState([]);
+  const [ratings, setRatings] = useState([]);
+  const usernameRef = useRef(null);
+  const fromYearRef = useRef(null);
+  const toYearRef = useRef(null);
+
+  const handleTest = () => {
+    setShowAnimeCard(true);
+  };
+
+  const handlePopularitiesChange = (event) => {
+    setPopularities(event.target.value);
+  };
+
+  const handleGenresChange = (event) => {
+    setGenres(event.target.value);
+  };
+
+  const handleEpisodeChange = (event) => {
+    setEpisodeCount(event.target.value);
+  };
+
+  const handleTypesChange = (event) => {
+    setTypes(event.target.value);
+  };
+
+  const handleStatusesChange = (event) => {
+    setStatuses(event.target.value);
+  };
+
+  const handleListStatusesChange = (event) => {
+    setListStatuses(event.target.value);
+  };
+
+  const handleRatingsChange = (event) => {
+    setRatings(event.target.value);
+  };
 
   return (
     <ThemeProvider theme={malTheme}>
@@ -60,24 +112,14 @@ function App() {
                 alignItems: "center",
               }}
             >
-              <TextField
-                placeholder="MAL Username"
-                variant="outlined"
-                focused
-              ></TextField>
-              <FormControl sx={{ gridColumnStart: "2", gridColumnEnd: "4" }}>
-                <InputLabel id="genres-label">Genres</InputLabel>
-                <Select
-                  multiple
-                  value={[]}
-                  labelId="genres-label"
-                  label="Genres"
-                >
-                  <MenuItem>Action</MenuItem>
-                  <MenuItem>Adventure</MenuItem>
-                  <MenuItem>Romance</MenuItem>
-                </Select>
-              </FormControl>
+              <TextInput placeholder={"MAL Username"} ref={usernameRef} />
+              <CustomSelectInput
+                style={{ gridColumnStart: "2", gridColumnEnd: "4" }}
+                itemValues={genreList}
+                value={genres}
+                handleChange={handleGenresChange}
+                renderValue={"Genres"}
+              />
               <Typography color="primary" variant="h5">
                 SCORE
               </Typography>
@@ -99,19 +141,14 @@ function App() {
               <Typography color="primary" variant="h5">
                 POPULARITY
               </Typography>
-              <FormControl sx={{ gridColumnStart: "2", gridColumnEnd: "4" }}>
-                <InputLabel id="popularity-label">Popularity</InputLabel>
-                <Select
-                  multiple
-                  value={[]}
-                  labelId="popularity-label"
-                  label="Popularity"
-                >
-                  <MenuItem>Unpopular</MenuItem>
-                  <MenuItem>Average</MenuItem>
-                  <MenuItem>Popular</MenuItem>
-                </Select>
-              </FormControl>
+              <CustomSelectInput
+                style={{ gridColumnStart: "2", gridColumnEnd: "4" }}
+                itemValues={popularitiesList}
+                value={popularities}
+                handleChange={handlePopularitiesChange}
+                renderValue={"Popularity"}
+              />
+
               <Typography color="primary" variant="h5">
                 FROM - TO
               </Typography>
@@ -122,11 +159,7 @@ function App() {
                   gridColumnEnd: "4",
                 }}
               >
-                <TextField
-                  placeholder="E.g. 1997"
-                  variant="outlined"
-                  focused
-                ></TextField>
+                <TextInput placeholder={"E.g. 1997"} ref={fromYearRef} />
                 <Divider
                   sx={{
                     borderWidth: "1px",
@@ -134,70 +167,46 @@ function App() {
                   }}
                   variant="middle"
                 />
-                <TextField
-                  placeholder="E.g. 2023"
-                  variant="outlined"
-                  focused
-                ></TextField>
+                <TextInput placeholder={"E.g. 2023"} ref={toYearRef} />
               </Box>
               <Typography color="primary" variant="h5">
                 EPISODES
               </Typography>
-              <FormControl sx={{ gridColumnStart: "2", gridColumnEnd: "4" }}>
-                <InputLabel id="episodes-label">Over</InputLabel>
-                <Select
-                  multiple
-                  value={[]}
-                  labelId="episodes-label"
-                  label="Episodes"
-                >
-                  <MenuItem>12</MenuItem>
-                  <MenuItem>24</MenuItem>
-                  <MenuItem>50</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <InputLabel id="type-label">Type</InputLabel>
-                <Select multiple value={[]} labelId="type-label" label="Type">
-                  <MenuItem>TV</MenuItem>
-                  <MenuItem>OVA</MenuItem>
-                  <MenuItem>Film</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl sx={{ gridColumnStart: "2", gridColumnEnd: "4" }}>
-                <InputLabel id="status-label">Status</InputLabel>
-                <Select
-                  multiple
-                  value={[]}
-                  labelId="status-label"
-                  label="Status"
-                >
-                  <MenuItem>Airing</MenuItem>
-                  <MenuItem>Finished Airing</MenuItem>
-                  <MenuItem>Scheduled to Air</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <InputLabel id="rating-label">Rating</InputLabel>
-                <Select multiple value={[]} labelId="rating-label" label="Type">
-                  <MenuItem>13+</MenuItem>
-                  <MenuItem>18+</MenuItem>
-                  <MenuItem>3+</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl sx={{ gridColumnStart: "2", gridColumnEnd: "4" }}>
-                <InputLabel id="list-status-label">List Status</InputLabel>
-                <Select
-                  multiple
-                  value={[]}
-                  labelId="list-status-label"
-                  label="ListStatus"
-                >
-                  <MenuItem>Planning to watch</MenuItem>
-                  <MenuItem>Watching</MenuItem>
-                  <MenuItem>Completed</MenuItem>
-                </Select>
-              </FormControl>
+              <CustomSelectInput
+                style={{ gridColumnStart: "2", gridColumnEnd: "4" }}
+                itemValues={episodeOptions}
+                value={episodeCount}
+                handleChange={handleEpisodeChange}
+                renderValue={"Less then"}
+              />
+              <CustomSelectInput
+                style={{}}
+                itemValues={typeList}
+                value={types}
+                handleChange={handleTypesChange}
+                renderValue={"Type"}
+              />
+              <CustomSelectInput
+                style={{ gridColumnStart: "2", gridColumnEnd: "4" }}
+                itemValues={statusOptions}
+                value={statuses}
+                handleChange={handleStatusesChange}
+                renderValue={"Status"}
+              />
+              <CustomSelectInput
+                style={{}}
+                itemValues={ratingOptions}
+                value={ratings}
+                handleChange={handleRatingsChange}
+                renderValue={"Rating"}
+              />
+              <CustomSelectInput
+                style={{ gridColumnStart: "2", gridColumnEnd: "4" }}
+                itemValues={listStatusOptions}
+                value={listStatuses}
+                handleChange={handleListStatusesChange}
+                renderValue={"Your List Status"}
+              />
             </Box>
             {
               <Box
@@ -211,7 +220,7 @@ function App() {
             }
           </Box>
           <Button
-            onClick={() => setShowAnimeCard(true)}
+            onClick={handleTest}
             sx={{
               height: "5vh",
               marginTop: "2vh",

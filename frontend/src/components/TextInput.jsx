@@ -1,9 +1,15 @@
 import { TextField } from "@mui/material";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 
-const TextInput = ({ placeholder }) => {
+const TextInput = forwardRef(({ placeholder }, ref) => {
   return (
-    <TextField placeholder={placeholder} variant="outlined" focused></TextField>
+    <TextField
+      inputRef={ref}
+      placeholder={placeholder}
+      variant="outlined"
+      focused
+    ></TextField>
   );
-};
+});
 
 export default TextInput;
